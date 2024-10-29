@@ -26,7 +26,7 @@ import json
 conexao = mysql.connector.connect(
     host= 'localhost',
     user= 'root',
-    password= 'amotec',
+    password= '',
     database= 'bdvisight'
 )
 
@@ -40,7 +40,7 @@ def inserirBD(nomeAlimento, liquido, bruto):
     print(f"Inserido no banco de dados: {nomeAlimento}, {liquido}kg, {bruto}kg")
 
 # Configura a serial para realizar a comunicação
-porta = 'COM3'
+porta = 'COM7'
 baud_rate = 115200
 comunicacao = serial.Serial(porta, baud_rate)
 
@@ -68,7 +68,7 @@ def encontrar_bounding_box(frame):
 
 # Carregando o modelo
 try:
-    modelo_carregado = load_model("C:\Users\reisn\OneDrive\Documentos\FACULDADE\Visight\blc\modeloBruto.h5")
+    modelo_carregado = load_model("C:\\Users\\reisn\\OneDrive\\Desktop\\VISIGHT\\blc\\modeloBruto.h5")
 except Exception as e:
     print(f"Erro ao carregar o modelo: {e}")
     exit(1)
@@ -162,8 +162,8 @@ async def main2():
 pygame.init()
 
 # Dimensões da tela
-SCREEN_WIDTH = 1366
-SCREEN_HEIGHT = 768
+SCREEN_WIDTH = 1800
+SCREEN_HEIGHT = 1000
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Fonte para exibir o texto
@@ -171,9 +171,10 @@ pygame.freetype.init()
 font = pygame.freetype.SysFont(None, 24)
 
 # Inicializa a captura de vídeo da Webcam
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 # Carregar imagem de fundo
-background_image = pygame.image.load("VISIGHT.png")
+background_image = pygame.image.load("C:\\Users\\reisn\\OneDrive\\Desktop\\VISIGHT\\blc\\VISIGHT.png")
+
 
 # Função para converter a imagem do OpenCV (BGR) para Pygame (RGB)
 def cv2_to_pygame(frame):
@@ -206,20 +207,23 @@ while running:
     ret, frame = cap.read()
     if ret:
         frame_surface = cv2_to_pygame(frame)
-        frame_surface = pygame.transform.scale(frame_surface, (580, 480))
-        screen.blit(frame_surface, (150, 230))  # Posiciona a imagem da webcam
+        frame_surface = pygame.transform.scale(frame_surface, (650, 500))
+        screen.blit(frame_surface, (220, 300))  # Posiciona a imagem da webcam
 
     # Desenha as caixas de texto para as informações
-    font.render_to(screen, (800, 260), "Verifique sua balança!", WHITE, size=45)
+    font.render_to(screen, (920, 300), "Verifique sua balança!", WHITE, size=45)
     
     # Campo Alimento
-    font.render_to(screen, (800, 360), f"Alimento: {nome_classe_predita}", WHITE,size=40)
+    font.render_to(screen, (920, 390), f"Alimento: {nome_classe_predita}", WHITE,size=40)
     
     # Campo Peso Bruto
-    font.render_to(screen, (800, 420), f"Peso Bruto: {pesoBruto}", WHITE, size=40)
+    font.render_to(screen, (920, 440), f"Peso Bruto: {pesoBruto}", WHITE, size=40)
     
     # Campo Peso Líquido
-    font.render_to(screen, (800, 480), f"Peso Liquido: {pesoLiquido}", WHITE, size=40)
+    font.render_to(screen, (920, 510), f"Peso Liquido: {pesoLiquido}", WHITE, size=40)
+    
+    # Campo Tempo
+    font.render_to(screen, (920, 590), f"Tempo de espera: {timer}", WHITE, size=35)
 
     # Atualiza a tela
     pygame.display.flip()    
@@ -275,9 +279,9 @@ while running:
                     # Captura o frame da webcam
                     ret, frame = cap.read()
                     if ret:
-                        frame_surface = cv2_to_pygame(frame)
-                        frame_surface = pygame.transform.scale(frame_surface, (580, 480))
-                        screen.blit(frame_surface, (150, 230))  # Posiciona a imagem da webcam
+                        frame_surface = cv2_to_pygame(frame)                
+                        frame_surface = pygame.transform.scale(frame_surface, (650, 500))
+                        screen.blit(frame_surface, (220, 300))  # Posiciona a imagem da webcam
 
                     # Preprocessamento da imagem
                     img_resized = cv2.resize(frame, (224, 224))
@@ -335,8 +339,8 @@ while running:
                     ret, frame = cap.read()
                     if ret:
                         frame_surface = cv2_to_pygame(frame)
-                        frame_surface = pygame.transform.scale(frame_surface, (580, 480))
-                        screen.blit(frame_surface, (150, 230))  # Posiciona a imagem da webcam
+                        frame_surface = pygame.transform.scale(frame_surface, (650, 500))
+                        screen.blit(frame_surface, (220, 300))  # Posiciona a imagem da webcam
                         
                     # Preprocessamento da imagem
                     img_resized = cv2.resize(frame, (224, 224))
