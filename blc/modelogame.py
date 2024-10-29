@@ -68,7 +68,7 @@ def encontrar_bounding_box(frame):
 
 # Carregando o modelo
 try:
-    modelo_carregado = load_model("C:\\Users\\reisn\\OneDrive\\Documentos\\FACULDADE\\Visight\\blc\\modeloBruto.h5")
+    modelo_carregado = load_model("C:\Users\reisn\OneDrive\Documentos\FACULDADE\Visight\blc\modeloBruto.h5")
 except Exception as e:
     print(f"Erro ao carregar o modelo: {e}")
     exit(1)
@@ -173,7 +173,7 @@ font = pygame.freetype.SysFont(None, 24)
 # Inicializa a captura de vídeo da Webcam
 cap = cv2.VideoCapture(1)
 # Carregar imagem de fundo
-background_image = pygame.image.load("blc/VISIGHT.png")
+background_image = pygame.image.load("VISIGHT.png")
 
 # Função para converter a imagem do OpenCV (BGR) para Pygame (RGB)
 def cv2_to_pygame(frame):
